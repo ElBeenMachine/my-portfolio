@@ -1,26 +1,23 @@
-# You can override the included template(s) by including variable overrides
-# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
-# Secret Detection customization: https://docs.gitlab.com/ee/user/application_security/secret_detection/pipeline/#customization
-# Dependency Scanning customization: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-the-dependency-scanning-settings
-# Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
-# Note that environment variables can be set in several places
-# See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
+image: carlallen/docker:buildx
+
 stages:
-- build
-- test
-- deploy
-- review
-- dast
-- staging
-- canary
-- production
-- incremental rollout 10%
-- incremental rollout 25%
-- incremental rollout 50%
-- incremental rollout 100%
-- performance
-- cleanup
-sast:
-  stage: test
-include:
-- template: Auto-DevOps.gitlab-ci.yml
+    - build
+
+variables:
+    IMAGE_NAME: $AZURECR_HOST/my-portfolio
+
+before_script:
+    - docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+    - echo "$AZURECR_PASSWORD" | docker login $AZURECR_HOST -u "$AZURECR_USER" --password-stdin
+    - docker buildx create --name builder --use
+
+# Build the Docker image for multiple architectures
+build:
+    stage: build
+    script:
+        - VERSION=$(cat VERSION)
+        - echo "Building Docker image for $IMAGE_NAME:$VERSION"
+
+        - docker buildx build --push --platform linux/amd64,linux/arm64 -t $IMAGE_NAME:latest -t $IMAGE_NAME:$VERSION .
+    rules:
+        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
