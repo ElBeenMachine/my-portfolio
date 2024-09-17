@@ -30,10 +30,10 @@ build:
 
 # Deploy the docker image to kubernetes
 deploy:
-    image: gitlab/gitlab-runner:latest
     stage: deploy
+    image: bitnami/kubectl:latest
     script:
-        - echo ./config
-        - kubectl set image deployment/my-portfolio my-portfolio=$IMAGE_NAME:$VERSION --namespace homelab
+        - echo /tmp/config
+    # - kubectl set image deployment/my-portfolio my-portfolio=$IMAGE_NAME:$VERSION --namespace homelab
     rules:
         - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
