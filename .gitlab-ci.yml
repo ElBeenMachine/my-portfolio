@@ -21,3 +21,11 @@ build:
         - docker buildx build --push --platform linux/amd64,linux/arm64 -t $IMAGE_NAME:latest -t $IMAGE_NAME:$VERSION .
     rules:
         - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+# Deploy the docker image to kubernetes
+deploy:
+    stage: deploy
+    script:
+        - kubectl set image deployment/my-portfolio my-portfolio=$IMAGE_NAME:$VERSION
+    rules:
+        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
