@@ -23,7 +23,7 @@ build:
     rules:
         - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
         - changes:
-              - VERSION
+              - ./VERSION
 
 # Deploy the docker image to kubernetes
 deploy:
