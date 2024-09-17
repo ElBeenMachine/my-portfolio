@@ -30,7 +30,7 @@ deploy:
     image: gitlab/gitlab-runner:latest
     stage: deploy
     script:
-        - echo -n $KUBE_CONFIG | base64 -d > ./config
+        # - echo -n $KUBE_CONFIG | base64 -d > ./config
         - echo ./config
         - kubectl set image deployment/my-portfolio my-portfolio=$IMAGE_NAME:$VERSION --kubeconfig ./config --namespace homelab
     rules:
