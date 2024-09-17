@@ -22,7 +22,7 @@ build:
         - docker buildx build --push --platform linux/amd64,linux/arm64 -t $IMAGE_NAME:latest -t $IMAGE_NAME:$VERSION .
     rules:
         - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-        - changes:
+          changes:
               - ./VERSION
 
 # Deploy the docker image to kubernetes
