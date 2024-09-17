@@ -6,11 +6,14 @@ stages:
 
 variables:
     IMAGE_NAME: $AZURECR_HOST/my-portfolio
+    KUBECONFIG_B64: $KUBECONFIG_B64
 
 before_script:
     - docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
     - echo "$AZURECR_PASSWORD" | docker login $AZURECR_HOST -u "$AZURECR_USER" --password-stdin
     - docker buildx create --name builder --use
+    - echo "$KUBECONFIG_B64" | base64 -d > /tmp/kubeconfig
+    - export KUBECONFIG=/tmp/kubeconfig
 
 # Build the Docker image for multiple architectures
 build:
@@ -30,8 +33,7 @@ deploy:
     image: gitlab/gitlab-runner:latest
     stage: deploy
     script:
-        # - echo -n $KUBE_CONFIG | base64 -d > ./config
         - echo ./config
-        - kubectl set image deployment/my-portfolio my-portfolio=$IMAGE_NAME:$VERSION --kubeconfig ./config --namespace homelab
+        - kubectl set image deployment/my-portfolio my-portfolio=$IMAGE_NAME:$VERSION --namespace homelab
     rules:
         - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
