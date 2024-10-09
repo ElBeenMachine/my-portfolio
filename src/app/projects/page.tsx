@@ -13,13 +13,16 @@ export default function ProjectsPage() {
 	useEffect(() => {
 		// Get the dashboard URL
 		fetch(
-			`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/api/content/projects/live`
+			`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/api/content/projects/all`
 		)
 			.then(async (res) => {
 				const data = await res.json();
-				Promise.all(data.map(getLastModified)).then(() => {
+				const filteredData = data.filter((x: Project) => {
+					return x.status == "published";
+				});
+				Promise.all(filteredData.map(getLastModified)).then(() => {
 					setProjects(
-						data.sort(
+						filteredData.sort(
 							(a: Project, b: Project) =>
 								new Date(b.createdAt).getTime() -
 								new Date(a.createdAt).getTime()
