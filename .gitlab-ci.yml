@@ -40,7 +40,7 @@ build:
     script:
         - echo "$AZURECR_PASSWORD" | docker login $AZURECR_HOST -u $AZURECR_USER --password-stdin
         - docker buildx create --use
-        - docker buildx build --platform=linux/amd64,linux/arm64/v8 --tag "$IMAGE_NAME:latest" --tag "$IMAGE_NAME:$TAG" --push .
+        - docker buildx build --platform=linux/amd64,linux/arm64/v8 --tag "$IMAGE_NAME:latest" --tag "$IMAGE_NAME:$TAG" --build-arg DASHBOARD_URL="https://dash.beenhamow.co.uk" --build-arg ANALYTICS_ID="G-NCDDJ1GR78" --push .
     tags:
         - prod
 

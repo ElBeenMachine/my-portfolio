@@ -14,6 +14,15 @@ RUN npm install
 # Copy the rest of the application code to the working directory
 COPY . .
 
+# Create .env.production
+ARG DASHBOARD_URL
+ARG ANALYTICS_ID
+
+RUN touch .env.production
+RUN echo "NEXT_PUBLIC_DASHBOARD_URL=${DASHBOARD_URL}" >> .env.production
+RUN echo "NEXT_PUBLIC_ANALYTICS_ID=${ANALYTICS_ID}" >> .env.production
+RUN cat .env.production
+
 # Build the Next.js application
 RUN npm run build
 

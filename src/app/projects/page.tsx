@@ -10,9 +10,6 @@ import { Bars } from "react-loader-spinner";
 export default function ProjectsPage() {
 	const [projects, setProjects] = useState<Project[]>([]);
 
-	console.log(process.env.NEXT_PUBLIC_DASHBOARD_URL);
-	console.log(process.env.NEXT_PUBLIC_ANALYTICS_ID);
-
 	useEffect(() => {
 		// Get the dashboard URL
 		fetch(

@@ -1,10 +1,12 @@
 services:
     my-portfolio:
-        build: .
+        build:
+            context: .
+            dockerfile: Dockerfile
+            args:
+                - DASHBOARD_URL=https://dashboard.beenhamow.co.uk
+                - ANALYTICS_ID=G-NCDDJ1GR78
         container_name: my-portfolio
         ports:
             - 3000:3000
-        environment:
-            NEXT_PUBLIC_DASHBOARD_URL: "https://dashboard.beenhamow.co.uk"
-            NEXT_PUBLIC_ANALYTICS_ID: "G-NCDDJ1GR78"
         restart: unless-stopped
