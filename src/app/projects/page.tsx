@@ -18,7 +18,7 @@ export default function ProjectsPage() {
 			.then(async (res) => {
 				const data = await res.json();
 				const filteredData = data.filter((x: Project) => {
-					return x.status == "published";
+					return x.status == "live";
 				});
 				Promise.all(filteredData.map(getLastModified)).then(() => {
 					setProjects(
