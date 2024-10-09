@@ -57,6 +57,6 @@ deploy:
         - cat kubeconfig
     script:
         # Deploy the image to the local kubernetes cluster
-        - kubectl set image deployment/my-portfolio my-portfolio=$IMAGE_NAME:$TAG -n homelab
+        - kubectl set image deployment/my-portfolio my-portfolio=$IMAGE_NAME:$TAG
     tags:
         - prod
