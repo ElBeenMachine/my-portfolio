@@ -1,0 +1,10 @@
+services:
+    my-portfolio:
+        build: .
+        container_name: my-portfolio
+        ports:
+            - 3000:3000
+        environment:
+            NEXT_PUBLIC_DASHBOARD_URL: "https://dashboard.beenhamow.co.uk"
+            NEXT_PUBLIC_ANALYTICS_ID: "G-NCDDJ1GR78"
+        restart: unless-stopped
