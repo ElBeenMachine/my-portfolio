@@ -40,7 +40,10 @@ build_amd64:
         - job: prepare
           artifacts: true
     script:
+        - docker pull "$IMAGE_NAME:latest" || true
         - docker build .
+          --build-arg BUILDKIT_INLINE_CACHE=1
+          --cache-from $IMAGE_NAME:latest
           --tag "$IMAGE_NAME:latest"
           --tag "$IMAGE_NAME:$TAG"
           --build-arg DASHBOARD_URL="https://dash.beenhamow.co.uk"
@@ -57,7 +60,10 @@ build_arm64:
         - job: prepare
           artifacts: true
     script:
+        - docker pull "$IMAGE_NAME:latest-arm64" || true
         - docker build .
+          --build-arg BUILDKIT_INLINE_CACHE=1
+          --cache-from $IMAGE_NAME:latest-arm64
           --tag "$IMAGE_NAME:latest-arm64"
           --tag "$IMAGE_NAME:$TAG-arm64"
           --build-arg DASHBOARD_URL="https://dash.beenhamow.co.uk"
