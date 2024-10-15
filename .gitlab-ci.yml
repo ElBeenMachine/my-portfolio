@@ -1,22 +1,24 @@
-image: docker:20
-
-# Define the services
-services:
-    - docker:20-dind
-
-# Define the variables
-variables:
-    DOCKER_DRIVER: overlay2
-
-    PROJECT_NAME: my-portfolio
-    IMAGE_NAME: $AZURECR_HOST/$PROJECT_NAME
-    CACHE_IMAGE_NAME: $IMAGE_NAME:cache
-
 # Define the stages
 stages:
     - prepare
     - build
     - deploy
+
+# Set default image and services
+default:
+    image: docker:24.0.5
+    services:
+        - docker:24.0.5-dind
+    before_script:
+        - until docker info; do sleep 1; done
+        - echo "$AZURECR_PASSWORD" | docker login $AZURECR_HOST -u $AZURECR_USER --password-stdin
+
+# Define the variables
+variables:
+    PROJECT_NAME: my-portfolio-dashboard
+    IMAGE_NAME: $AZURECR_HOST/$PROJECT_NAME
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
 
 # Prepare the job
 prepare:
@@ -32,31 +34,55 @@ prepare:
             dotenv: variables.env
 
 # Build the image for AMD64 architecture
-build:
+build_amd64:
     stage: build
     needs:
         - job: prepare
           artifacts: true
     script:
-        - echo "$AZURECR_PASSWORD" | docker login $AZURECR_HOST -u $AZURECR_USER --password-stdin
-        - docker buildx create --use
-        - docker buildx build --platform=linux/amd64,linux/arm64/v8 --tag "$IMAGE_NAME:latest" --tag "$IMAGE_NAME:$TAG" --build-arg DASHBOARD_URL="https://dash.beenhamow.co.uk" --build-arg ANALYTICS_ID="G-NCDDJ1GR78" --push .
+        - docker build .
+          --tag "$IMAGE_NAME:latest"
+          --tag "$IMAGE_NAME:$TAG"
+          --build-arg DASHBOARD_URL="https://dash.beenhamow.co.uk"
+          --build-arg ANALYTICS_ID="G-NCDDJ1GR78"
+        - docker push $IMAGE_NAME:latest
+        - docker push $IMAGE_NAME:$TAG
     tags:
         - prod
+
+# Build the image for ARM64 architecture
+build_arm64:
+    stage: build
+    needs:
+        - job: prepare
+          artifacts: true
+    script:
+        - docker build .
+          --tag "$IMAGE_NAME:latest-arm64"
+          --tag "$IMAGE_NAME:$TAG-arm64"
+          --build-arg DASHBOARD_URL="https://dash.beenhamow.co.uk"
+          --build-arg ANALYTICS_ID="G-NCDDJ1GR78"
+        - docker push $IMAGE_NAME:latest-arm64
+        - docker push $IMAGE_NAME:$TAG-arm64
+    tags:
+        - arm_kubernetes
 
 # Deploy the image to local kubernetes cluster
 deploy:
     stage: deploy
     image: cylab/kubectl
-    # needs:
-    # - job: build
+    needs:
+        - job: build_arm64
+        - job: prepare
+          artifacts: true
     before_script:
         # Load the base64 encoded kubeconfig
         - echo "$KUBECONFIG_B64" | base64 -d > kubeconfig
         - export KUBECONFIG=kubeconfig
         - cat kubeconfig
+    services: []
     script:
         # Deploy the image to the local kubernetes cluster
-        - kubectl set image deployment/my-portfolio my-portfolio=$IMAGE_NAME:$TAG
+        - kubectl set image deployment/my-portfolio my-portfolio=$IMAGE_NAME:$TAG-arm64
     tags:
         - prod
