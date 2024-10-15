@@ -55,7 +55,7 @@ export default function ProjectContents({ id }: { id: string }) {
 				/>
 				{project.body && (
 					<MarkdownPreview
-						style={{ background: "none" }}
+						style={{ background: "none", color: "white" }}
 						source={project.body}
 					/>
 				)}

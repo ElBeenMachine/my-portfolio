@@ -39,7 +39,7 @@ export default function ProjectDetailPage({
 				href={"/projects"}
 				target={"_self"}
 				className={
-					"mt-5 mb-2 flex items-center transition-all group hover:text-accent w-max font-normal text-md"
+					"mt-5 mb-8 flex items-center transition-all group hover:text-accent w-max font-normal text-md"
 				}>
 				<FaArrowLeft
 					className={
