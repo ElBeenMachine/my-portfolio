@@ -15,7 +15,7 @@ default:
 
 # Define the variables
 variables:
-    PROJECT_NAME: my-portfolio-dashboard
+    PROJECT_NAME: my-portfolio
     IMAGE_NAME: $AZURECR_HOST/$PROJECT_NAME
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
