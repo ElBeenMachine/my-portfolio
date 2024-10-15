@@ -12,7 +12,7 @@ export default function UnderConstruction() {
 					className={
 						"flex justify-center items-center flex-col gap-5"
 					}>
-					<h1 className={"text-5xl font-bold"}>
+					<h1 className={"text-5xl text-center font-bold"}>
 						Not quite there yet!
 					</h1>
 					<p className={"text-center max-w-[500px] my-5"}>
