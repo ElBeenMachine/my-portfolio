@@ -1,5 +1,12 @@
 import Container from "@/components/Container";
+import { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+	title: "404 Not Found",
+	description:
+		"The page or resource that you have requested is no longer available or has been moved.",
+};
 
 export default function NotFoundPage() {
 	return (
@@ -12,7 +19,7 @@ export default function NotFoundPage() {
 					className={
 						"flex justify-center items-center flex-col gap-5"
 					}>
-					<h1 className={"text-5xl font-bold"}>Oops!</h1>
+					<h1 className={"text-5xl font-bold text-center"}>Oops!</h1>
 					<p className={"text-center max-w-[500px] my-5"}>
 						The page or resource that you have requested is no
 						longer available or has been moved.

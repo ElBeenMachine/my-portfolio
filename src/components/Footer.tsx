@@ -79,7 +79,7 @@ export default function Footer() {
 	return (
 		<footer className="py-5">
 			<Container>
-				<div className="w-full h-full flex flex-col justify-center items-center gap-10">
+				<div className="w-full h-full flex flex-col justify-center items-center gap-10 border-t pt-20 border-solid border-white/15">
 					<div
 						className={
 							"w-full flex flex-col md:flex-row items-center justify-between gap-5"

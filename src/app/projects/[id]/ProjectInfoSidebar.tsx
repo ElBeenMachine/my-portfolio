@@ -42,11 +42,11 @@ export default function ProjectInfoSideBar({
 					<Link
 						href={updatedProject?.gitHub}
 						target="_blank"
-						className="mt-2 block hover:text-gray-400 transition-all">
+						className="mt-2 block hover:text-gray-400 transition-all truncate">
 						<FaGithub
 							size={20}
 							className="inline-block mr-2"
-						/>{" "}
+						/>
 						{getGithubUsernameAndRepo(updatedProject?.gitHub)}
 					</Link>
 				)}
@@ -54,7 +54,7 @@ export default function ProjectInfoSideBar({
 					<Link
 						href={updatedProject?.link}
 						target="_blank"
-						className="mt-2 block hover:text-gray-400 transition-all">
+						className="mt-2 block hover:text-gray-400 transition-all truncate">
 						<CiGlobe
 							size={20}
 							className="inline-block mr-2"
