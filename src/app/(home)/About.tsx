@@ -26,7 +26,7 @@ export default function About() {
 							multi-national company.
 						</p>
 					</div>
-					<div className="hidden md:flex w-full justify-center items-center flex-grow">
+					<div className="hidden xl:flex w-full justify-center items-center flex-grow">
 						<img
 							src="/img/about.svg"
 							alt="About Me"
