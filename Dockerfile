@@ -35,9 +35,6 @@ WORKDIR /app
 # Copy only the build output from the builder stage
 COPY --from=builder /app ./
 
-# Install only production dependencies
-RUN npm ci
-
 # Expose port 3000
 EXPOSE 3000
 
