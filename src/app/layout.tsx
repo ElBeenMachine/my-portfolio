@@ -9,7 +9,10 @@ import NextTopLoader from "nextjs-toploader";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: { template: "%s | Ollie Beenham", default: "My Portfolio" },
+	title: {
+		template: "%s | Ollie Beenham",
+		default: "My Portfolio | Ollie Beenham",
+	},
 	description:
 		"I am a bachelor's degree student studying software engineering in Liverpool. I am currently working on creating user-friendly and engaging web experiences.",
 	openGraph: {
