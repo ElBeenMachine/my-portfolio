@@ -4,6 +4,7 @@ import "@/styles/globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GoogleAnalytics from "@/components/Analytics";
+import NextTopLoader from "nextjs-toploader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,6 +34,10 @@ export default function RootLayout({
 		<html lang="en">
 			<body
 				className={`${inter.className} min-h-dvh bg-background-primary text-white`}>
+				<NextTopLoader
+					color="#00ffff"
+					showSpinner={false}
+				/>
 				<Navbar />
 				<main>{children}</main>
 				<Footer />
