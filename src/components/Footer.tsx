@@ -128,6 +128,11 @@ export default function Footer() {
 								text={"LJMU Software Engineering Team"}
 								target="_blank"
 							/>
+							<FooterLink
+								href={"https://dash.beenhamow.co.uk"}
+								text={"Dashboard"}
+								target="_blank"
+							/>
 						</FooterLinkContainer>
 					</div>
 					<div
@@ -154,7 +159,7 @@ export default function Footer() {
 					</div>
 					<div className="w-full flex flex-wrap justify-center items-center">
 						<p className="text-center text-gray-300/50">
-							Portfolio v{version} &copy; {year} Ollie Beenham.
+							Portfolio v{version} &copy; {year} Ollie Beenham
 						</p>
 					</div>
 				</div>

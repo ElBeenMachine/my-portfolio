@@ -29,11 +29,12 @@ export default function Hero() {
 					I build things for the web.
 				</h2>
 				<p
-					className={"max-w-md text-gray-300 mb-8 big-header"}
+					className={"max-w-2xl text-gray-300 mb-8 big-header"}
 					style={{ animationDelay: "400ms" }}>
-					I am a bachelor's degree student studying software
-					engineering in Liverpool. I am currently working on creating
-					user-friendly and engaging web experiences.
+					I'm an undergraduate student studying software engineering
+					in my second year at Liverpool John Moores University.
+					Passionate about web development and DevOps, I am constantly
+					looking to learn new technologies and improve my skills.
 				</p>
 
 				<Link
