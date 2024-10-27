@@ -1,7 +1,6 @@
 "use client";
 
 import Project from "@/lib/interfaces/Project.interface";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Bars } from "react-loader-spinner";
 import ProjectInfoSideBar from "./ProjectInfoSidebar";
@@ -9,7 +8,6 @@ import MarkdownPreview from "@uiw/react-markdown-preview";
 
 export default function ProjectContents({ id }: { id: string }) {
 	const [project, setProject] = useState<Project | null>(null);
-	const router = useRouter();
 
 	useEffect(() => {
 		fetch(
@@ -21,7 +19,6 @@ export default function ProjectContents({ id }: { id: string }) {
 			})
 			.catch((err) => {
 				console.error(err);
-				router.push("/projects");
 			});
 
 		return () => {

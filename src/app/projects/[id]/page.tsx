@@ -3,12 +3,15 @@ import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa";
 
 import ProjectContents from "./ProjectContents";
+import { notFound } from "next/navigation";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
 	const id = params.id;
 	const data = await fetch(
 		`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/api/content/projects/${id}`
 	);
+
+	if (data.status == 404) return notFound();
 
 	const project = await data.json();
 
