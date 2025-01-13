@@ -1,4 +1,4 @@
-# Define the stages
+# Define the pipeline stages
 stages:
     - sast
     - release
