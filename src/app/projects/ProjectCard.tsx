@@ -3,7 +3,6 @@ import Link from "next/link";
 import Project from "@/lib/interfaces/Project.interface";
 
 import { CiGlobe } from "react-icons/ci";
-import { FaGithub } from "react-icons/fa";
 
 /**
  * ProjectCard component
