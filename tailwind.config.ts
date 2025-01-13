@@ -9,11 +9,12 @@ const config: Config = {
 	theme: {
 		extend: {
 			colors: {
-				background: "var(--background)",
-				foreground: "var(--foreground)",
+				accent: "#00ffff",
+				"background-primary": "#1a1a1a",
+				input: "#2b2b2b",
 			},
 		},
 	},
-	plugins: [],
+	plugins: [require("@tailwindcss/typography")],
 };
 export default config;
