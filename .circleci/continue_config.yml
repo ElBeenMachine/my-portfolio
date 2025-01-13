@@ -112,7 +112,7 @@ jobs:
             - run:
                   name: Check if Version Exists
                   command: |
-                      echo "$DOCKER_PASSWORD" | docker login $DOCKER_HOST -u "$DOCKER_USERNAME" --password-stdin
+                      docker login "$DOCKER_HOST" -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
                       if docker manifest inspect "$DOCKER_HOST/<< pipeline.parameters.PROJECT_NAME >>:$TAG" > /dev/null 2>&1; then
                           echo "Docker image $DOCKER_HOST/<< pipeline.parameters.PROJECT_NAME >>:$TAG already exists."
                           exit 1
