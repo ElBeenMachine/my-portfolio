@@ -5,7 +5,8 @@ import { FaSpotify } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
 // Get version from package.json
-const { version } = require("../../package.json");
+import packageJson from "../../package.json";
+const { version } = packageJson;
 
 interface SocialLinkProps {
 	href: string;

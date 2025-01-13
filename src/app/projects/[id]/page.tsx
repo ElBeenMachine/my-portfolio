@@ -7,35 +7,35 @@ import { notFound } from "next/navigation";
 import { createDBConnection } from "@/lib/db";
 import { ObjectId } from "mongodb";
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
 	const id = (await params).id;
 
-	// Create a database connection
+	// Create database connection
 	const db = await createDBConnection();
-	if (!db) return { status: 500 };
+	if (!db) return notFound();
 
-	// Get the project with the specified ID
-	const project = await db.collection("projects").findOne({ _id: new ObjectId(id) });
+	const projects = db.collection("projects");
 
+	const project = await projects.findOne({ _id: new ObjectId(id) });
 	if (!project) return notFound();
 
 	return {
-		title: project?.name,
-		description: project?.description,
+		title: project.name,
+		description: project.description,
 		openGraph: {
 			type: "website",
 			locale: "en_GB",
 			siteName: "My Portfolio | Ollie Beenham",
 			images: [
 				{
-					url: project?.thumbnail,
+					url: project.thumbnail,
 				},
 			],
 		},
 	};
 }
 
-export default async function ProjectDetailPage({ params }: { params: { id: string } }) {
+export default async function ProjectDetailPage({ params }: { params: Promise<{ id: string }> }) {
 	return (
 		<Container>
 			<Link

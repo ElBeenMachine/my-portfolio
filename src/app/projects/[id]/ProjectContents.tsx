@@ -23,7 +23,7 @@ export default function ProjectContents({ id }: { id: string }) {
 		return () => {
 			setProject(null);
 		};
-	}, []);
+	}, [id]);
 
 	if (!project)
 		return (
