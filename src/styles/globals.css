@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+	scroll-behavior: smooth;
+}
+
+.big-header {
+	transform: translateY(40px);
+	opacity: 0;
+	animation: fade-in-up 1s ease-in-out forwards;
+}
+
+@keyframes fade-in-up {
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+.project-card {
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+#project-description * {
+	font-size: revert;
+	font-weight: revert;
+	line-height: revert;
+	list-style-type: disc;
+	list-style-position: inside;
+}
+
+#project-description h1:not(:first-of-type),
+h2:not(:first-of-type),
+h3:not(:first-of-type),
+h4:not(:first-of-type),
+h5:not(:first-of-type),
+h6:not(:first-of-type) {
+	margin-top: 30px;
+}
+
+#project-description img {
+	max-height: 500px;
+	margin-top: 20px;
+}
+
+#project-description li {
+	padding-left: 40px;
+}
