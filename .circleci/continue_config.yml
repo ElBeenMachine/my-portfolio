@@ -94,13 +94,13 @@ jobs:
             - run:
                   name: Check if Version Exists
                   command: |
-                      echo "DOCKER_HOST: $DOCKER_HOST"
-                      echo "$DOCKER_PASSWORD" | docker login "$DOCKER_HOST" -u "$DOCKER_USERNAME" --password-stdin
-                      if docker manifest inspect "$DOCKER_HOST/<< pipeline.parameters.PROJECT_NAME >>:$TAG" > /dev/null 2>&1; then
-                          echo "Docker image $DOCKER_HOST/<< pipeline.parameters.PROJECT_NAME >>:$TAG already exists."
+                      echo "DOCKER_REGISTRY: $DOCKER_REGISTRY"
+                      echo "$DOCKER_PASSWORD" | docker login "$DOCKER_REGISTRY" -u "$DOCKER_USERNAME" --password-stdin
+                      if docker manifest inspect "$DOCKER_REGISTRY/<< pipeline.parameters.PROJECT_NAME >>:$TAG" > /dev/null 2>&1; then
+                          echo "Docker image $DOCKER_REGISTRY/<< pipeline.parameters.PROJECT_NAME >>:$TAG already exists."
                           exit 1
                       else
-                          echo "Docker image $DOCKER_HOST/<< pipeline.parameters.PROJECT_NAME >>:$TAG does not exist."
+                          echo "Docker image $DOCKER_REGISTRY/<< pipeline.parameters.PROJECT_NAME >>:$TAG does not exist."
                       fi
             - run: |
                   cp $BASH_ENV bash.env
@@ -126,6 +126,6 @@ jobs:
             - run:
                   name: Build Docker image
                   command: |
-                      echo "$DOCKER_PASSWORD" | docker login $DOCKER_HOST -u "$DOCKER_USERNAME" --password-stdin
+                      echo "$DOCKER_PASSWORD" | docker login $DOCKER_REGISTRY -u "$DOCKER_USERNAME" --password-stdin
                       docker buildx create --use
-                      docker buildx build --platform linux/amd64,linux/arm64 -t $DOCKER_HOST/<< pipeline.parameters.PROJECT_NAME >>:$TAG -t $DOCKER_HOST/<< pipeline.parameters.PROJECT_NAME >>:latest --push .
+                      docker buildx build --platform linux/amd64,linux/arm64 -t $DOCKER_REGISTRY/<< pipeline.parameters.PROJECT_NAME >>:$TAG -t $DOCKER_REGISTRY/<< pipeline.parameters.PROJECT_NAME >>:latest --push .
