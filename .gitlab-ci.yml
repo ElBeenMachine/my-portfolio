@@ -1,13 +1,65 @@
-# You can override the included template(s) by including variable overrides
-# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
-# Secret Detection customization: https://docs.gitlab.com/ee/user/application_security/secret_detection/pipeline/#customization
-# Dependency Scanning customization: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-the-dependency-scanning-settings
-# Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
-# Note that environment variables can be set in several places
-# See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
+# Define the stages
 stages:
-- test
+    - sast
+    - release
+
+# Configure SAST Workflow
 sast:
-  stage: test
+    stage: sast
 include:
-- template: Security/SAST.gitlab-ci.yml
+    - template: Security/SAST.gitlab-ci.yml
+
+# Get the project version
+get_project_version:
+    stage: release
+    image: node:23-alpine
+    script:
+        - export VERSION=$(node -p "require('./package.json').version")
+        - echo "VERSION=$VERSION" >> variables.env
+    before_script: []
+    services: []
+    artifacts:
+        reports:
+            dotenv: variables.env
+    rules:
+        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+          changes:
+              - public/**
+              - src/**
+              - .dockerignore
+              - Dockerfile
+              - next.config.ts
+              - package.json
+              - package-lock.json
+              - postcss.config.mjs
+              - tailwind.config.ts
+              - tsconfig.json
+
+# Create a release
+create_release:
+    stage: release
+    needs:
+        - job: get_project_version
+          artifacts: true
+    image: registry.gitlab.com/gitlab-org/release-cli:latest
+    script:
+        - echo "Creating release $VERSION"
+    release:
+        name: Release $VERSION
+        tag_name: $VERSION
+        description: |
+            This is the release for version $VERSION
+        ref: $CI_COMMIT_SHA
+    rules:
+        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+          changes:
+              - public/**
+              - src/**
+              - .dockerignore
+              - Dockerfile
+              - next.config.ts
+              - package.json
+              - package-lock.json
+              - postcss.config.mjs
+              - tailwind.config.ts
+              - tsconfig.json
