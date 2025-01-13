@@ -85,6 +85,7 @@ jobs:
             - image: << pipeline.parameters.NODE_IMAGE >>
         steps:
             - checkout
+            - setup_remote_docker
             - run:
                   name: Get Project Version
                   command: |
