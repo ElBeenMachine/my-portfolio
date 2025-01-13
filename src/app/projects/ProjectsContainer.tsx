@@ -19,7 +19,7 @@ export default function ProjectsContainer() {
 				});
 
 				const sortedData = filteredData.sort((a: Project, b: Project) => {
-					return new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime();
+					return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
 				});
 
 				console.log(sortedData);

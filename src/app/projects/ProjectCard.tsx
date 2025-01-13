@@ -18,7 +18,7 @@ export default function ProjectCard({ project }: { project: Project }) {
 			<div className="z-10 w-full h-full p-6 flex flex-col bg-background-primary/80 hover:opacity-90">
 				<h2 className="text-xl font-semibold">{project.name}</h2>
 				<p className="text-sm text-accent font-light">
-					Last Updated {moment(project.createdAt).fromNow()}
+					Last Updated {moment(project.updatedAt).fromNow()}
 				</p>
 				<p className="mt-3">{project.description}</p>
 				<div className={"flex-grow"}></div>
