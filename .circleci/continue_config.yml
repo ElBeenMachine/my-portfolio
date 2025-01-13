@@ -90,6 +90,16 @@ jobs:
                   command: |
                       export TAG=$(node -p "require('./package.json').version")
                       echo export TAG=$(node -p "require('./package.json').version") >> $BASH_ENV
+            - run:
+                  name: Check if Version Exists
+                  command: |
+                      docker login "$DOCKER_HOST" -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+                      if docker manifest inspect "$DOCKER_HOST/<< pipeline.parameters.PROJECT_NAME >>:$TAG" > /dev/null 2>&1; then
+                          echo "Docker image $DOCKER_HOST/<< pipeline.parameters.PROJECT_NAME >>:$TAG already exists."
+                          exit 1
+                      else
+                          echo "Docker image $DOCKER_HOST/<< pipeline.parameters.PROJECT_NAME >>:$TAG does not exist."
+                      fi
             - run: |
                   cp $BASH_ENV bash.env
             - persist_to_workspace:
@@ -109,16 +119,6 @@ jobs:
             - setup_remote_docker
             - attach_workspace:
                   at: .
-            - run:
-                  name: Check if Version Exists
-                  command: |
-                      docker login "$DOCKER_HOST" -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-                      if docker manifest inspect "$DOCKER_HOST/<< pipeline.parameters.PROJECT_NAME >>:$TAG" > /dev/null 2>&1; then
-                          echo "Docker image $DOCKER_HOST/<< pipeline.parameters.PROJECT_NAME >>:$TAG already exists."
-                          exit 1
-                      else
-                          echo "Docker image $DOCKER_HOST/<< pipeline.parameters.PROJECT_NAME >>:$TAG does not exist."
-                      fi
             - run: |
                   cat bash.env >> $BASH_ENV
             - run:
