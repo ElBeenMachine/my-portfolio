@@ -33,7 +33,6 @@ workflows:
                       public/.* RUN_TESTS true
                       public/.* RUN_PUBLISH true
 
-                      .circleci/.* RUN_TESTS true
                       .circleci/.* RUN_PUBLISH true
 
                       src/.* RUN_PUBLISH true
