@@ -114,9 +114,6 @@ jobs:
     Build_And_Push:
         docker:
             - image: << pipeline.parameters.BASE_IMAGE >>
-        # environment:
-        #     DOCKER_DRIVER: overlay2
-        #     DOCKER_TLS_CERTDIR: ""
         steps:
             - checkout
             - setup_remote_docker
