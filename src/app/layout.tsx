@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "@/styles/globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import GoogleAnalytics from "@/components/Analytics";
 import { env } from "next-runtime-env";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -63,7 +62,6 @@ export default function RootLayout({
 				<div className="flex-grow"></div>
 				<Footer />
 			</body>
-			<GoogleAnalytics />
 		</html>
 	);
 }
