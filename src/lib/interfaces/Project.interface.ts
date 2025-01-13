@@ -7,5 +7,5 @@ export default interface Project {
 	status: string;
 	link: string;
 	createdAt: Date;
-	lastUpdated: Date;
+	updatedAt: Date;
 }
