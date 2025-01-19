@@ -10,7 +10,7 @@ export const mongoURI = env("MONGO_URI") as string;
 /**
  * Create a connection to the database
  *
- * @returns {Promise<database>} The database connection
+ * @returns {Promise<{client, db}>} The database connection and the client
  */
 export const createDBConnection = async () => {
 	// If we are building the Docker image, return null
@@ -21,5 +21,5 @@ export const createDBConnection = async () => {
 	const db = client.db(env("INSTANCE_ID"));
 
 	// Return the database
-	return db;
+	return { client, db };
 };
