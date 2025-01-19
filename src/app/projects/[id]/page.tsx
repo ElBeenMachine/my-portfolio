@@ -11,12 +11,18 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 	const id = (await params).id;
 
 	// Create database connection
-	const db = await createDBConnection();
-	if (!db) return notFound();
+	const connection = await createDBConnection();
+	if (!connection) return notFound();
+
+	const { client, db } = connection;
 
 	const projects = db.collection("projects");
 
 	const project = await projects.findOne({ _id: new ObjectId(id) });
+
+	// Close the connection
+	client.close();
+
 	if (!project) return notFound();
 
 	return {
