@@ -2,24 +2,41 @@
  * @author Ollie Beenham
  */
 
-import { MongoClient } from "mongodb";
+import { Db, MongoClient } from "mongodb";
 import { env } from "next-runtime-env";
 
 export const mongoURI = env("MONGO_URI") as string;
 
+let cachedClient: MongoClient | null = null;
+let cachedDb: Db | null = null;
+
+export async function connectToDatabase(): Promise<Db | null> {
+	// If the database URI was not defined, throw an error
+	if (!mongoURI) {
+		if (env("DOCKER_BUILD") == "false") return null;
+	}
+
+	if (cachedDb) return cachedDb;
+
+	if (!cachedClient) {
+		// Create a new client
+		cachedClient = new MongoClient(mongoURI);
+
+		// Connect to the client
+		await cachedClient.connect();
+	}
+
+	cachedDb = cachedClient.db(env("INSTANCE_ID"));
+	return cachedDb!;
+}
+
 /**
- * Create a connection to the database
+ * Mask the MongoDB URI
  *
- * @returns {Promise<{client, db}>} The database connection and the client
+ * @param {string} uri The URI of the mongodb database
+ * @returns {string} The masked URI
  */
-export const createDBConnection = async () => {
-	// If we are building the Docker image, return null
-	if (env("DOCKER_BUILD")) return null;
-
-	// Create and return the database connection
-	const client = new MongoClient(mongoURI);
-	const db = client.db(env("INSTANCE_ID"));
-
-	// Return the database
-	return { client, db };
+export const maskConnectionString = (uri: string): string => {
+	if (!uri) return "";
+	return uri.replace(/\/\/(.*?):(.*?)@/, "//user:password@");
 };

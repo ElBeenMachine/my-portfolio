@@ -4,24 +4,19 @@ import { FaArrowLeft } from "react-icons/fa";
 
 import ProjectContents from "./ProjectContents";
 import { notFound } from "next/navigation";
-import { createDBConnection } from "@/lib/db";
+import { connectToDatabase } from "@/lib/db";
 import { ObjectId } from "mongodb";
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
 	const id = (await params).id;
 
 	// Create database connection
-	const connection = await createDBConnection();
-	if (!connection) return notFound();
-
-	const { client, db } = connection;
+	const db = await connectToDatabase();
+	if (!db) return notFound();
 
 	const projects = db.collection("projects");
 
 	const project = await projects.findOne({ _id: new ObjectId(id) });
-
-	// Close the connection
-	client.close();
 
 	if (!project) return notFound();
 
