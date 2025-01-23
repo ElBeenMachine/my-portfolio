@@ -1,4 +1,4 @@
-import { createDBConnection } from "@/lib/db";
+import { connectToDatabase } from "@/lib/db";
 import { ObjectId } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -11,14 +11,8 @@ export const GET = async (req: NextRequest) => {
 	// Get the query string
 	const id = req.nextUrl.searchParams.get("id");
 
-	// Create database connection
-	const connection = await createDBConnection();
-	if (!connection)
-		return NextResponse.json({ error: "Database connection failed" }, { status: 500 });
-
-	const { client, db } = connection;
+	const db = await connectToDatabase();
 	if (!db) {
-		client.close();
 		return NextResponse.json({ error: "Database connection failed" }, { status: 500 });
 	}
 
@@ -26,13 +20,11 @@ export const GET = async (req: NextRequest) => {
 
 	// Return all projects if none specified
 	if (!id) {
-		client.close();
 		return NextResponse.json(projects);
 	}
 
 	// Return the project with the specified ID
 	const project = await db.collection("projects").findOne({ _id: new ObjectId(id) });
-	client.close();
 
 	if (!project) return NextResponse.json({ error: "Project not found" }, { status: 404 });
 
