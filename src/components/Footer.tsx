@@ -116,7 +116,7 @@ export default function Footer() {
 								target="_blank"
 							/>
 							<FooterLink
-								href={"https://www.ljmu.dev"}
+								href={"https://owb.gg/ljmu"}
 								text={"LJMU Software Engineering Team"}
 								target="_blank"
 							/>
@@ -131,7 +131,7 @@ export default function Footer() {
 						id={"footer-socials"}
 						className={"w-full flex justify-center md:justify-end gap-3"}
 					>
-						<SocialLink href={"https://owb.gg/me"} icon={<FaGitlab size={30} />} />
+						<SocialLink href={"https://owb.gg/gitlab"} icon={<FaGitlab size={30} />} />
 						<SocialLink
 							href={"https://owb.gg/linkedin"}
 							icon={<IoLogoLinkedin size={30} />}
