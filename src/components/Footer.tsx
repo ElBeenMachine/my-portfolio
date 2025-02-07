@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Container from "./Container";
-import { IoLogoGithub, IoLogoLinkedin } from "react-icons/io";
-import { FaSpotify } from "react-icons/fa";
+import { IoLogoLinkedin } from "react-icons/io";
+import { FaGitlab } from "react-icons/fa6";
 import { FaXTwitter } from "react-icons/fa6";
 
 // Get version from package.json
@@ -131,21 +131,14 @@ export default function Footer() {
 						id={"footer-socials"}
 						className={"w-full flex justify-center md:justify-end gap-3"}
 					>
+						<SocialLink href={"https://owb.gg/me"} icon={<FaGitlab size={30} />} />
 						<SocialLink
-							href={"https://github.beenhamow.co.uk"}
-							icon={<IoLogoGithub size={30} />}
-						/>
-						<SocialLink
-							href={"https://linkedin.beenhamow.co.uk"}
+							href={"https://owb.gg/linkedin"}
 							icon={<IoLogoLinkedin size={30} />}
 						/>
 						<SocialLink
-							href={"https://twitter.beenhamow.co.uk"}
+							href={"https://owb.gg/twitter"}
 							icon={<FaXTwitter size={30} />}
-						/>
-						<SocialLink
-							href={"https://spotify.beenhamow.co.uk"}
-							icon={<FaSpotify size={30} />}
 						/>
 					</div>
 					<div className="w-full flex flex-wrap justify-center items-center">
