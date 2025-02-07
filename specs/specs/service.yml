@@ -12,5 +12,5 @@ spec:
         app: my-portfolio
     ports:
         - port: 3000
-          nodePort: 32183
+          nodePort: 32184
           name: http
