@@ -1,0 +1,16 @@
+---
+# Kubernetes Service Definition
+
+apiVersion: v1
+kind: Service
+metadata:
+    name: my-portfolio
+    namespace: my-portfolio
+spec:
+    type: NodePort
+    selector:
+        app: my-portfolio
+    ports:
+        - port: 3000
+          nodePort: 32183
+          name: http

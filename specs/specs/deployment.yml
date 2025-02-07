@@ -1,0 +1,37 @@
+---
+# Kubernetes Deployment Definition
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: my-portfolio
+    namespace: my-portfolio
+    annotations:
+        secrets.doppler.com/reload: "true"
+spec:
+    replicas: 2
+    selector:
+        matchLabels:
+            app: my-portfolio
+    template:
+        metadata:
+            labels:
+                app: my-portfolio
+        spec:
+            containers:
+                - name: my-portfolio
+                  image: beantech.azurecr.io/my-portfolio:latest
+                  imagePullPolicy: Always
+
+                  envFrom:
+                      - secretRef:
+                            name: doppler-my-portfolio-prod-secret
+                  resources:
+                      requests:
+                          memory: "250Mi"
+                          cpu: "250m"
+                      limits:
+                          memory: "500Mi"
+                          cpu: "500m"
+            imagePullSecrets:
+                - name: azurecr
