@@ -1,9 +1,2 @@
-# My Portfolio
-
-> Disclaimer: If you are reading this from GitHub, please note that this project has been mirrored from my GitLab account, and as such, any issues, branches and merge requests may not be visible or up to date. To view the GitLab version of this project, please visit [the GitLab repository](https://owb.gg/gitlab).
-
-## About the Project
-
-This project has evolved over the years, from a static portfolio build in basic html to a portfolio managed by my [portfolio dashboard](https://gitlab.com/elbeenmachine/portfolio-dashboard-template) project, dynamically updating and fetching projects from a remote database.
-
-The production release of this project can be found at [https://www.beenhamow.co.uk](https://owb.gg/me).
+> [!note]
+> This project has since been migrated to my personal GitLab instance. It's presence on GitHub serves solely as an archive for versions 1 and 2 of the portfolio. The new project is available at [https://gitlab.beantech.uk/my-portfolio/my-portfolio](https://gitlab.beantech.uk/my-projects/my-portfolio)
